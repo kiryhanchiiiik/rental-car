@@ -54,3 +54,11 @@ button:hover,
 button:focus {
   background-color: #0b44cd;
 }
+
+select {
+  outline: none;
+}
+
+input {
+  outline: none;
+}

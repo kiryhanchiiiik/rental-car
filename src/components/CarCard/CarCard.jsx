@@ -32,7 +32,6 @@ function CarCard() {
           ))}
       </ul>
       <div className={css.btnContainer}>
-        {" "}
         <button type="button" className={css.loadMore}>
           Load more
         </button>

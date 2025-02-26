@@ -1,48 +1,10 @@
-.wrapper {
+.container {
+  padding-top: 84px;
+}
+.container form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-.label {
-  margin-right: 115px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 133%;
-  color: #8d929a;
-}
-.customSelect {
-  position: relative;
-}
-
-.customSelect select {
-  width: 200px;
-  appearance: none;
-  cursor: pointer;
-  border-radius: 12px;
-  border: transparent;
-  background-color: #f7f7f7;
-  padding: 12px 16px;
-}
-
-.customSelect::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  pointer-events: none;
-  transform: translateY(-50%);
-  /* width: 20px;
-  height: 20px;
-  background: url("../../assets/img/catalog/btn-down.svg"); */
-}
-
-.arrow {
-  display: inline-block;
-  transition: transform 0.3s ease; /* Плавный переход для поворота */
-}
-
-/* Поворот стрелочки вверх */
-.arrowUp {
-  transform: rotate(180deg); /* Поворот стрелки на 180 градусов */
+  justify-content: center;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 56px;
 }

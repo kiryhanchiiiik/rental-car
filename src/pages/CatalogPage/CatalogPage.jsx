@@ -4,7 +4,7 @@ import css from "./CatalogPage.module.css";
 function Catalog() {
   return (
     <div className={css.container}>
-      {" "}
+      <FilterForm />
       <CarCard />
     </div>
   );
