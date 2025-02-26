@@ -8,7 +8,8 @@ p {
   margin: 0;
 }
 :root {
-  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
 }
 p:last-child {
   margin-bottom: 0;
@@ -37,7 +38,19 @@ body {
   background-color: #ffffff;
   color: #2f2f2f;
 }
-
-.container {
-  max-width: 1440px;
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+button {
+  border-radius: 12px;
+  color: #ffffff;
+  background-color: #3470ff;
+  /* padding: 12px 99px; */
+  transition: background-color 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+button:hover,
+button:focus {
+  background-color: #0b44cd;
 }

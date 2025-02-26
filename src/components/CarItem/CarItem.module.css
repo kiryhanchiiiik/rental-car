@@ -1,0 +1,58 @@
+.listItem {
+  position: relative;
+  width: 276px;
+}
+.image {
+  border-radius: 14px;
+  margin-bottom: 16px;
+  height: 250px;
+}
+.title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+}
+.blueTitle {
+  color: #3470ff;
+}
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.price {
+  font-weight: 500;
+  color: #101828;
+}
+.info {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  color: #8d929a;
+  margin-bottom: 4px;
+}
+.infoTwo {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  color: #8d929a;
+}
+.btn {
+  margin-top: 28px;
+  padding: 12px 98px;
+}
+
+.svg {
+  cursor: pointer;
+  position: absolute;
+  left: 90%;
+  bottom: 93%;
+  transition: fill 0.3s ease;
+  width: 16px;
+  height: 16px;
+  fill: #f2f4f7;
+}
+
+.liked use {
+  fill: #3470ff;
+}
