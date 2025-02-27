@@ -4,16 +4,35 @@ import CarItem from "../CarItem/CarItem";
 import css from "./CarCard.module.css";
 
 function CarCard() {
-  const [cars, setCars] = useState(null);
+  const [cars, setCars] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCars = async (page) => {
+    setLoading(true);
+    try {
+      const { data } = await axiosInstance.get("cars", {
+        params: {
+          page,
+          limit: 12,
+        },
+      });
+
+      setCars((prevCars) =>
+        page === 1 ? data.cars : [...prevCars, ...data.cars]
+      );
+      setTotalPages(data.totalPages);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCars = async () => {
-      const { data } = await axiosInstance.get("cars");
-      setCars(Array.isArray(data) ? data : data.cars || []);
-    };
-
-    fetchCars();
-  }, []);
+    fetchCars(currentPage);
+  }, [currentPage]);
 
   const toggleLike = (carId) => {
     setCars((prevCars) =>
@@ -21,6 +40,12 @@ function CarCard() {
         car.id === carId ? { ...car, isLiked: !car.isLiked } : car
       )
     );
+  };
+
+  const loadMoreCars = () => {
+    if (currentPage < totalPages && !loading) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
   };
 
   return (
@@ -31,11 +56,18 @@ function CarCard() {
             <CarItem key={car.id} car={car} toggleLike={toggleLike} />
           ))}
       </ul>
-      <div className={css.btnContainer}>
-        <button type="button" className={css.loadMore}>
-          Load more
-        </button>
-      </div>
+      {currentPage < totalPages && (
+        <div className={css.btnContainer}>
+          <button
+            type="button"
+            className={css.loadMore}
+            onClick={loadMoreCars}
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Load more"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

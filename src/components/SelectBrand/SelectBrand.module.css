@@ -84,6 +84,7 @@
 }
 .dropdownItem {
   padding: 10px;
+  padding-left: 18px;
   cursor: pointer;
   color: #8d929a;
 }

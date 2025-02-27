@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import css from "./SelectBrand.module.css";
 
 function SelectBrand({ brands }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
+  const dropdownRef = useRef(null);
+
   const handleToggle = () => setIsOpen((prev) => !prev);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className={css.wrapper}>
       <label className={css.label}>Car brand</label>
-      <div className={css.customSelect}>
+      <div className={css.customSelect} ref={dropdownRef}>
         <button
           type="button"
           onClick={handleToggle}

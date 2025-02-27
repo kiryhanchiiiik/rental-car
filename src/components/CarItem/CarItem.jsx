@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import css from "./CarItem.module.css";
+
 function CarItem({ car, toggleLike }) {
   const addressParts = car.address.split(", ");
   const city = addressParts[addressParts.length - 2];
@@ -15,7 +16,11 @@ function CarItem({ car, toggleLike }) {
         height="16"
         onClick={() => toggleLike(car.id)}
       >
-        <use href="/sprite.svg#icon-heart"></use>
+        {car.isLiked ? (
+          <use href="sprite.svg#icon-heart-filled"></use>
+        ) : (
+          <use href="sprite.svg#icon-heart"></use>
+        )}
       </svg>
 
       <div className={css.wrapper}>
