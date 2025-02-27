@@ -40,6 +40,9 @@
 .btn {
   margin-top: 28px;
   padding: 12px 98px;
+  background-color: #3470ff;
+  color: #ffffff;
+  border-radius: 12px;
 }
 
 .svg {

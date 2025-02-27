@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import Catalog from "./pages/CatalogPage/CatalogPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import "./App.css";
+import CarDetailsPage from "./pages/CarDetailsPage/CarDetailsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/catalog" element={<Catalog />}>
           Catalog
         </Route>
+        <Route path="/catalog/:id" element={<CarDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

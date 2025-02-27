@@ -11,19 +11,6 @@
   line-height: 133%;
   color: #8d929a;
 }
-.customSelect {
-  position: relative;
-}
-
-.customSelect select {
-  width: 200px;
-  appearance: none;
-  cursor: pointer;
-  border-radius: 12px;
-  border: transparent;
-  background-color: #f7f7f7;
-  padding: 12px 16px;
-}
 
 .customSelect::after {
   content: "";
@@ -45,4 +32,62 @@
 
 .arrowUp {
   transform: rotate(180deg);
+}
+
+.customSelect {
+  position: relative;
+}
+
+.selectButton {
+  width: 170px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: #101828;
+}
+.selectButton:hover,
+.selectButton:focus {
+  background: #f7f7f7;
+}
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.arrowUp {
+  transform: rotate(180deg);
+}
+
+.dropdownList {
+  position: absolute;
+  width: 204px;
+  margin-top: 5px;
+  background: white;
+  border: 1px solid #f7f7f7;
+  border-radius: 12px;
+  box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
+  max-height: 272px;
+  overflow-y: scroll;
+  z-index: 10;
+}
+
+.dropdownList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdownList::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 8px solid #dadde1;
+}
+.dropdownItem {
+  padding: 10px;
+  cursor: pointer;
+  color: #8d929a;
+}
+
+.dropdownItem:hover {
+  color: #101828;
 }

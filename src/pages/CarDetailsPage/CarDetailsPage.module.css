@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  gap: 72px;
+  padding-left: 120px;
+  padding-right: 120px;
+  padding-top: 84px;
+  padding-bottom: 84px;
+}
+.carInfo {
+  margin-top: 20px;
+}
+.carDetails {
+  display: flex;
+  margin-bottom: 8px;
+}
+.image {
+  width: 640px;
+  height: 512px;
+  border-radius: 19px;
+}
+.ph {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.mileage {
+  margin-left: 16px;
+}
+.price {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
+  color: #3470ff;
+}
+
+.rentalDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.condition {
+  margin-top: 88px;
+}
+
+.conditionTitle {
+  margin-bottom: 20px;
+}
+.conditionList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.conditionListItem {
+  display: flex;
+  align-items: center;
+}
+.svg {
+  margin-right: 8px;
+}
+
+.specificationTitle {
+  margin-top: 110px;
+  margin-bottom: 20px;
+}
+.accessoriesTitle {
+  margin-top: 110px;
+  margin-bottom: 20px;
+}
+.specificationListItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.accessoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.accessoriesListItem {
+  display: flex;
+  align-items: center;
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

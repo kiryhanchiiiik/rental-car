@@ -1,0 +1,51 @@
+.error {
+  color: red;
+}
+.formContainer {
+  border: 1px solid #dadde1;
+  padding: 32px;
+  border-radius: 10px;
+}
+.formTitle {
+  margin-bottom: 8px;
+}
+.formSubTitle {
+  color: #8d929a;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  margin-bottom: 24px;
+}
+
+.input {
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  padding: 12px 20px;
+  width: 576px;
+}
+
+.bookingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.datepickerInput {
+  border-radius: 12px;
+  background-color: #f7f7f7;
+  width: 576px;
+  padding: 12px 20px;
+}
+
+.textarea {
+  padding: 12px 20px 56px 20px;
+  height: 86px;
+}
+
+.submitBtn {
+  text-align: center;
+  padding: 12px 59px;
+}
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}

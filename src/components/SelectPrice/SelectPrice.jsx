@@ -13,7 +13,7 @@ function SelectPrice({ prices }) {
             {prices &&
               prices.map((price) => (
                 <option key={price} value={price}>
-                  {price}$
+                  {price}
                 </option>
               ))}
           </select>

@@ -2,7 +2,7 @@ import css from "./SearchButton.module.css";
 function SearchButton() {
   return (
     <div className={css.container}>
-      <button className={css.btn} type="submit">
+      <button to="/catalog/:id" className={css.btn} type="submit">
         Search
       </button>
     </div>

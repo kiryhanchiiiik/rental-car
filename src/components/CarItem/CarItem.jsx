@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import css from "./CarItem.module.css";
 function CarItem({ car, toggleLike }) {
   const addressParts = car.address.split(", ");
@@ -30,9 +31,9 @@ function CarItem({ car, toggleLike }) {
       <p className={css.infoTwo}>
         {car.type} | {car.mileage.toLocaleString().replace(/,/g, " ")} km
       </p>
-      <button type="button" className={css.btn}>
+      <Link to={`/catalog/${car.id}`} type="button" className={css.btn}>
         Read more
-      </button>
+      </Link>
     </li>
   );
 }

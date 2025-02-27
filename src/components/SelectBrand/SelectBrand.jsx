@@ -1,33 +1,44 @@
 import { useState } from "react";
 import css from "./SelectBrand.module.css";
+
 function SelectBrand({ brands }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   const handleToggle = () => setIsOpen((prev) => !prev);
+
   return (
-    <div>
-      {" "}
-      <div className={css.wrapper}>
-        <label className={css.label}>Car brand</label>
-        <div className={css.customSelect}>
-          <select onClick={handleToggle} placeholder="Choose a Brand">
-            <option value="">Choose a Brand</option>
-            {brands &&
-              brands.map((brand) => (
-                <option key={brand} value={brand}>
-                  {brand}
-                </option>
-              ))}
-          </select>
-          <div
-            onClick={handleToggle}
-            className={`${css.arrow} ${isOpen ? css.arrowUp : ""}`}
-          >
+    <div className={css.wrapper}>
+      <label className={css.label}>Car brand</label>
+      <div className={css.customSelect}>
+        <button
+          type="button"
+          onClick={handleToggle}
+          className={css.selectButton}
+        >
+          {selected || "Choose a Brand"}
+          <div className={`${css.arrow} ${isOpen ? css.arrowUp : ""}`}>
             <svg width="20" height="20">
               <use href="/public/sprite.svg#down"></use>
             </svg>
           </div>
-        </div>
+        </button>
+        {isOpen && (
+          <ul className={css.dropdownList}>
+            {brands.map((brand) => (
+              <li
+                key={brand}
+                className={css.dropdownItem}
+                onClick={() => {
+                  setSelected(brand);
+                  setIsOpen(false);
+                }}
+              >
+                {brand}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
