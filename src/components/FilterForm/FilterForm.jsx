@@ -1,31 +1,35 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../api/axiosInstance";
-
 import SelectBrand from "./../SelectBrand/SelectBrand";
 import css from "./FilterForm.module.css";
 import SelectPrice from "./../SelectPrice/SelectPrice";
 import SelectMileage from "./../SelectMileage/SelectMileage";
 import SearchButton from "./../SearchButton/SearchButton";
+import { useDispatch, useSelector } from "react-redux";
+import { selectFilter } from "../../redux/filterCars/filterSelectors";
+import {
+  setBrands,
+  setSelectedBrands,
+} from "../../redux/filterCars/filterSlice";
 
 function FilterForm() {
-  // Local state for brands, prices, mileage, and selected price
-  const [brands, setBrands] = useState(null);
+  const dispatch = useDispatch();
+  const { brands } = useSelector(selectFilter);
+  const [selectedBrand, setSelectedBrand] = useState(null);
   const [prices, setPrices] = useState(null);
   const [mileage, setMileage] = useState({ min: "", max: "" });
   const [selectedPrice, setSelectedPrice] = useState(null);
 
   useEffect(() => {
-    // Fetch brands
     const fetchBrands = async () => {
       try {
         const res = await axiosInstance.get("brands");
-        setBrands(res.data);
+        dispatch(setBrands(res.data));
       } catch (error) {
         console.error("Failed to fetch brands:", error);
       }
     };
 
-    // Fetch prices
     const fetchPrices = async () => {
       try {
         const res = await axiosInstance.get("cars");
@@ -42,7 +46,17 @@ function FilterForm() {
 
     fetchBrands();
     fetchPrices();
-  }, []);
+  }, [dispatch]);
+
+  const handleBrandChange = (brand) => {
+    setSelectedBrand(brand);
+  };
+
+  const handleSearch = async () => {
+    if (selectedBrand) {
+      dispatch(setSelectedBrands(selectedBrand));
+    }
+  };
 
   const handleMileageChange = (e) => {
     const { name, value } = e.target;
@@ -59,14 +73,14 @@ function FilterForm() {
   return (
     <div className={css.container}>
       <form className={css.form}>
-        <SelectBrand brands={brands} />
+        <SelectBrand brands={brands} onChange={handleBrandChange} />
         <SelectPrice
           prices={prices}
           selectedPrice={selectedPrice}
           onChange={handlePriceChange}
         />
         <SelectMileage mileage={mileage} onChange={handleMileageChange} />
-        <SearchButton />
+        <SearchButton onClick={handleSearch} />{" "}
       </form>
     </div>
   );

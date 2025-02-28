@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import css from "./SelectBrand.module.css";
 
-function SelectBrand({ brands }) {
+function SelectBrand({ brands, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedBrand, setSelectedBrandState] = useState(null);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -15,6 +15,12 @@ function SelectBrand({ brands }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleBrandClick = (brand) => {
+    setSelectedBrandState(brand);
+    onChange(brand);
+    setIsOpen(false);
+  };
 
   return (
     <div className={css.wrapper}>
@@ -38,10 +44,7 @@ function SelectBrand({ brands }) {
               <li
                 key={brand}
                 className={css.dropdownItem}
-                onClick={() => {
-                  setSelectedBrand(brand);
-                  setIsOpen(false);
-                }}
+                onClick={() => handleBrandClick(brand)}
               >
                 {brand}
               </li>

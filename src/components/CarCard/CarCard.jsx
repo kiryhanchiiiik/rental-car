@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "./../../api/axiosInstance";
 import CarItem from "../CarItem/CarItem";
 import css from "./CarCard.module.css";
+import { useSelector } from "react-redux";
 
 function CarCard() {
+  const selectedBrand = useSelector((state) => state.filter.selectedBrands);
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -12,12 +14,16 @@ function CarCard() {
   const fetchCars = async (page) => {
     setLoading(true);
     try {
-      const { data } = await axiosInstance.get("cars", {
-        params: {
-          page,
-          limit: 12,
-        },
-      });
+      const params = {
+        page,
+        limit: 12,
+      };
+
+      if (selectedBrand) {
+        params.brand = selectedBrand;
+      }
+
+      const { data } = await axiosInstance.get("cars", { params });
 
       setCars((prevCars) =>
         page === 1 ? data.cars : [...prevCars, ...data.cars]
@@ -32,7 +38,7 @@ function CarCard() {
 
   useEffect(() => {
     fetchCars(currentPage);
-  }, [currentPage]);
+  }, [currentPage, selectedBrand]);
 
   const toggleLike = (carId) => {
     setCars((prevCars) =>
