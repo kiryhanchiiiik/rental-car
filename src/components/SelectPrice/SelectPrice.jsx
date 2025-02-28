@@ -27,7 +27,7 @@ function SelectPrice({ prices, selectedPrice, onChange }) {
           onClick={handleToggle}
           className={css.selectButton}
         >
-          {selectedPrice || "Choose a Price"}
+          {selectedPrice ? `To $${selectedPrice}` : "Choose a Price"}
           <div className={`${css.arrow} ${isOpen ? css.arrowUp : ""}`}>
             <svg width="20" height="20">
               <use href="/public/sprite.svg#down"></use>

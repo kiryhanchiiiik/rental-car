@@ -2,7 +2,6 @@ import { useState } from "react";
 import css from "./SelectMileage.module.css";
 
 function SelectMileage() {
-  // Local state for mileage (from and to)
   const [mileage, setMileage] = useState({
     from: "",
     to: "",
@@ -11,13 +10,10 @@ function SelectMileage() {
   const handleChange = (e) => {
     let { name, value } = e.target;
 
-    // Clean the value from any non-digit characters
     value = value.replace(/[^0-9]/g, "");
 
-    // Add thousand separators
     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    // Update local state
     setMileage((prevMileage) => ({
       ...prevMileage,
       [name]: value,

@@ -19,6 +19,7 @@ function FilterForm() {
   const [prices, setPrices] = useState(null);
   const [mileage, setMileage] = useState({ min: "", max: "" });
   const [selectedPrice, setSelectedPrice] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -27,6 +28,7 @@ function FilterForm() {
         dispatch(setBrands(res.data));
       } catch (error) {
         console.error("Failed to fetch brands:", error);
+        setError("Failed to load brands. Please try again later.");
       }
     };
 
@@ -38,9 +40,11 @@ function FilterForm() {
           setPrices([...new Set(allPrices)]);
         } else {
           console.error("No cars data found.");
+          setError("Failed to load prices. Please try again later.");
         }
       } catch (error) {
         console.error("Failed to fetch prices:", error);
+        setError("Failed to load prices. Please try again later.");
       }
     };
 
@@ -73,6 +77,11 @@ function FilterForm() {
   return (
     <div className={css.container}>
       <form className={css.form}>
+        {error && (
+          <div className={css.errorMessage}>
+            <p>{error}</p>
+          </div>
+        )}
         <SelectBrand brands={brands} onChange={handleBrandChange} />
         <SelectPrice
           prices={prices}
@@ -80,7 +89,7 @@ function FilterForm() {
           onChange={handlePriceChange}
         />
         <SelectMileage mileage={mileage} onChange={handleMileageChange} />
-        <SearchButton onClick={handleSearch} />{" "}
+        <SearchButton onClick={handleSearch} />
       </form>
     </div>
   );

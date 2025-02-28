@@ -25,3 +25,22 @@
   display: flex;
   justify-content: center;
 }
+.loaderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorContainer {
+  padding: 20px;
+  background-color: #ffdddd;
+  color: #d8000c;
+  border: 1px solid #d8000c;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.errorMessage {
+  font-size: 16px;
+  font-weight: bold;
+}

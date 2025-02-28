@@ -4,21 +4,52 @@ import { axiosInstance } from "../../api/axiosInstance";
 
 import css from "./CarDetailsPage.module.css";
 import CarDetailForm from "../../components/CarDetailForm/CarDetailForm";
+import Loader from "../../components/Loader/Loader";
 
 function CarDetailsPage() {
   const { id } = useParams();
   const [car, setCar] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchCarDetail = async () => {
+  const fetchCarDetail = async () => {
+    try {
+      setIsLoading(true);
       const res = await axiosInstance.get(`cars/${id}`);
       setCar(res.data);
-    };
+    } catch (err) {
+      console.error("Failed to load car details:", err);
+      setError("Failed to load car details. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchCarDetail();
   }, [id]);
 
+  if (isLoading) {
+    return (
+      <div className={css.loader}>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={css.errorContainer}>
+        <div className={css.error}>{error}</div>
+        <button className={css.retryButton} onClick={fetchCarDetail}>
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   if (!car) {
-    return <div>Автомобиль не найден</div>;
+    return <div className={css.error}>Car not found</div>;
   }
 
   const addressParts = car.address?.split(", ") || [];
