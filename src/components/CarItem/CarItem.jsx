@@ -1,7 +1,18 @@
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { toggleLike } from "../../redux/likedCar/carSlice"; // Переконайтесь, що цей шлях правильний
 import css from "./CarItem.module.css";
 
-function CarItem({ car, toggleLike }) {
+function CarItem({ car }) {
+  const dispatch = useDispatch();
+  const likedCars = useSelector((state) => state.cars.likedCars); // Замість state.cars, перевірте правильний шлях до вашого slice
+
+  const isLiked = likedCars.includes(car.id);
+
+  const handleToggleLike = () => {
+    dispatch(toggleLike(car.id));
+  };
+
   const addressParts = car.address.split(", ");
   const city = addressParts[addressParts.length - 2];
   const country = addressParts[addressParts.length - 1];
@@ -11,12 +22,12 @@ function CarItem({ car, toggleLike }) {
       <img className={css.image} src={car.img} alt={car.model} />
 
       <svg
-        className={`${css.svg} ${car.isLiked ? css.liked : ""}`}
+        className={`${css.svg} ${isLiked ? css.liked : ""}`}
         width="16"
         height="16"
-        onClick={() => toggleLike(car.id)}
+        onClick={handleToggleLike}
       >
-        {car.isLiked ? (
+        {isLiked ? (
           <use href="sprite.svg#icon-heart-filled"></use>
         ) : (
           <use href="sprite.svg#icon-heart"></use>

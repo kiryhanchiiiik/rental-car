@@ -3,11 +3,8 @@ import css from "./SelectBrand.module.css";
 
 function SelectBrand({ brands }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
-
+  const [selectedBrand, setSelectedBrand] = useState(null);
   const dropdownRef = useRef(null);
-
-  const handleToggle = () => setIsOpen((prev) => !prev);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -15,12 +12,8 @@ function SelectBrand({ brands }) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -29,10 +22,10 @@ function SelectBrand({ brands }) {
       <div className={css.customSelect} ref={dropdownRef}>
         <button
           type="button"
-          onClick={handleToggle}
+          onClick={() => setIsOpen(!isOpen)}
           className={css.selectButton}
         >
-          {selected || "Choose a Brand"}
+          {selectedBrand || "Choose a Brand"}
           <div className={`${css.arrow} ${isOpen ? css.arrowUp : ""}`}>
             <svg width="20" height="20">
               <use href="/public/sprite.svg#down"></use>
@@ -46,7 +39,7 @@ function SelectBrand({ brands }) {
                 key={brand}
                 className={css.dropdownItem}
                 onClick={() => {
-                  setSelected(brand);
+                  setSelectedBrand(brand);
                   setIsOpen(false);
                 }}
               >
