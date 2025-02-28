@@ -30,7 +30,7 @@ function SelectPrice({ prices, selectedPrice, onChange }) {
           {selectedPrice ? `To $${selectedPrice}` : "Choose a Price"}
           <div className={`${css.arrow} ${isOpen ? css.arrowUp : ""}`}>
             <svg width="20" height="20">
-              <use href="/public/sprite.svg#down"></use>
+              <use href="/sprite.svg#down"></use>
             </svg>
           </div>
         </button>
