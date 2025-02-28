@@ -36,6 +36,7 @@ function CarDetailsPage() {
           <h3>
             {car.brand} {car.model}, {car.year}
           </h3>
+          <span className={css.span}>Id:{car.id}</span>
         </div>
         <div className={css.location}>
           <svg width="16" height="16">

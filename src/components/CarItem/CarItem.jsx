@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { toggleLike } from "../../redux/likedCar/carSlice"; // Переконайтесь, що цей шлях правильний
+import { toggleLike } from "../../redux/likedCar/carSlice";
+import { selectLikedCar } from "../../redux/likedCar/carSelectors";
 import css from "./CarItem.module.css";
 
 function CarItem({ car }) {
   const dispatch = useDispatch();
-  const likedCars = useSelector((state) => state.cars.likedCars); // Замість state.cars, перевірте правильний шлях до вашого slice
+  const likedCars = useSelector(selectLikedCar);
 
   const isLiked = likedCars.includes(car.id);
 
