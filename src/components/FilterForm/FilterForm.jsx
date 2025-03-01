@@ -1,62 +1,59 @@
+// src/components/FilterForm/FilterForm.js
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../../api/axiosInstance";
-import SelectBrand from "./../SelectBrand/SelectBrand";
-import css from "./FilterForm.module.css";
-import SelectPrice from "./../SelectPrice/SelectPrice";
-import SelectMileage from "./../SelectMileage/SelectMileage";
-import SearchButton from "./../SearchButton/SearchButton";
 import { useDispatch, useSelector } from "react-redux";
-import { selectFilter } from "../../redux/filterCars/filterSelectors";
 import {
   setMileage,
   setBrands,
   setPrices,
   setSelectedBrands,
   setSelectedPrices,
+  resetFilters,
+  setError,
 } from "../../redux/filterCars/filterSlice";
+import { selectFilter } from "../../redux/filterCars/filterSelectors";
+import { fetchBrands, fetchPrices } from "../../api/carApi";
+import SelectBrand from "../SelectBrand/SelectBrand";
+import SelectPrice from "../SelectPrice/SelectPrice";
+import SelectMileage from "../SelectMileage/SelectMileage";
+import SearchButton from "../SearchButton/SearchButton";
+import css from "./FilterForm.module.css";
 
 function FilterForm() {
   const dispatch = useDispatch();
-  const { brands, prices, mileage } = useSelector(selectFilter);
+  const { brands, prices, mileage, error } = useSelector(selectFilter);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [localMileage, setLocalMileage] = useState(mileage);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBrands = async () => {
+    const loadBrands = async () => {
       try {
-        const res = await axiosInstance.get("brands");
-        dispatch(setBrands(res.data));
+        const data = await fetchBrands();
+        dispatch(setBrands(data));
       } catch (error) {
-        console.error("Failed to fetch brands:", error);
-        setError("Failed to load brands. Please try again later.");
+        dispatch(setError("Failed to load brands. Please try again later."));
+        console.error(error);
       }
     };
 
-    const fetchPrices = async () => {
+    const loadPrices = async () => {
       try {
-        const res = await axiosInstance.get("cars");
-        if (Array.isArray(res.data?.cars)) {
-          const allPrices = res.data.cars.map((car) => car.rentalPrice);
-          const uniquePrices = [...new Set(allPrices)].sort((a, b) => a - b);
-          dispatch(setPrices(uniquePrices));
-        } else {
-          console.error("No valid cars data found.");
-          setError("Failed to load prices. Please try again later.");
-        }
+        const data = await fetchPrices();
+        dispatch(setPrices(data));
       } catch (error) {
-        console.error("Failed to fetch prices:", error);
-        setError("Failed to load prices. Please try again later.");
+        dispatch(setError("Failed to load prices. Please try again later."));
+        console.error(error);
       }
     };
 
-    fetchBrands();
-    fetchPrices();
+    loadBrands();
+    loadPrices();
   }, [dispatch]);
 
   const handleSearch = (e) => {
     e.preventDefault();
+
+    dispatch(resetFilters());
 
     if (selectedBrand) {
       dispatch(setSelectedBrands(selectedBrand));

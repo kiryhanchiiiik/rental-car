@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Formik, Field, Form } from "formik";
-import css from "./CarDetailForm.module.css";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
+import * as Yup from "yup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
+import css from "./CarDetailForm.module.css";
 
 const CarDetailsPage = () => {
   const [bookingDate, setBookingDate] = useState(null);
