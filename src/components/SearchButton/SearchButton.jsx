@@ -1,8 +1,9 @@
 import css from "./SearchButton.module.css";
-function SearchButton({ onClick }) {
+
+function SearchButton() {
   return (
     <div className={css.container}>
-      <button className={css.btn} type="button" onClick={onClick}>
+      <button className={css.btn} type="submit">
         Search
       </button>
     </div>

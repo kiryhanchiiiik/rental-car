@@ -44,3 +44,30 @@
   font-size: 16px;
   font-weight: bold;
 }
+.notFound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d8000c;
+}
+.notFoundButton {
+  width: 116px;
+  background-color: #3470ff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.notFoundButton:hover {
+  background-color: #0b44cd;
+}
+.notFoundContainer {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+}

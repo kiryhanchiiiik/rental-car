@@ -6,6 +6,8 @@ function SelectBrand({ brands, onChange }) {
   const [selectedBrand, setSelectedBrandState] = useState(null);
   const dropdownRef = useRef(null);
 
+  const handleToggle = () => setIsOpen((prev) => !prev);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -28,13 +30,13 @@ function SelectBrand({ brands, onChange }) {
       <div className={css.customSelect} ref={dropdownRef}>
         <button
           type="button"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleToggle}
           className={css.selectButton}
         >
           {selectedBrand || "Choose a Brand"}
           <div className={`${css.arrow} ${isOpen ? css.arrowUp : ""}`}>
             <svg width="20" height="20">
-              <use href="/public/sprite.svg#down"></use>
+              <use href="/sprite.svg#down"></use>
             </svg>
           </div>
         </button>

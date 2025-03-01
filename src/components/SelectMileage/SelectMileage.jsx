@@ -1,23 +1,17 @@
-import { useState } from "react";
 import css from "./SelectMileage.module.css";
 
-function SelectMileage() {
-  const [mileage, setMileage] = useState({
-    from: "",
-    to: "",
-  });
-
+function SelectMileage({ mileage, onChange }) {
   const handleChange = (e) => {
     let { name, value } = e.target;
 
     value = value.replace(/[^0-9]/g, "");
 
-    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    onChange(name, value);
+  };
 
-    setMileage((prevMileage) => ({
-      ...prevMileage,
-      [name]: value,
-    }));
+  const formatMileage = (value) => {
+    if (!value) return value;
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (
@@ -29,7 +23,7 @@ function SelectMileage() {
           <input
             type="text"
             name="from"
-            value={mileage.from}
+            value={formatMileage(mileage.from)}
             onChange={handleChange}
             className={`${css.kmInput} ${css.kmInputWithBorder}`}
           />
@@ -39,7 +33,7 @@ function SelectMileage() {
           <input
             type="text"
             name="to"
-            value={mileage.to}
+            value={formatMileage(mileage.to)}
             onChange={handleChange}
             className={`${css.kmInput} ${css.padding}`}
           />

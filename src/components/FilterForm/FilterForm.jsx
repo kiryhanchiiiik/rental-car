@@ -8,17 +8,19 @@ import SearchButton from "./../SearchButton/SearchButton";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilter } from "../../redux/filterCars/filterSelectors";
 import {
+  setMileage,
   setBrands,
+  setPrices,
   setSelectedBrands,
+  setSelectedPrices,
 } from "../../redux/filterCars/filterSlice";
 
 function FilterForm() {
   const dispatch = useDispatch();
-  const { brands } = useSelector(selectFilter);
+  const { brands, prices, mileage } = useSelector(selectFilter);
   const [selectedBrand, setSelectedBrand] = useState(null);
-  const [prices, setPrices] = useState(null);
-  const [mileage, setMileage] = useState({ min: "", max: "" });
   const [selectedPrice, setSelectedPrice] = useState(null);
+  const [localMileage, setLocalMileage] = useState(mileage);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -35,11 +37,12 @@ function FilterForm() {
     const fetchPrices = async () => {
       try {
         const res = await axiosInstance.get("cars");
-        if (Array.isArray(res.data.cars)) {
+        if (Array.isArray(res.data?.cars)) {
           const allPrices = res.data.cars.map((car) => car.rentalPrice);
-          setPrices([...new Set(allPrices)]);
+          const uniquePrices = [...new Set(allPrices)].sort((a, b) => a - b);
+          dispatch(setPrices(uniquePrices));
         } else {
-          console.error("No cars data found.");
+          console.error("No valid cars data found.");
           setError("Failed to load prices. Please try again later.");
         }
       } catch (error) {
@@ -52,22 +55,26 @@ function FilterForm() {
     fetchPrices();
   }, [dispatch]);
 
-  const handleBrandChange = (brand) => {
-    setSelectedBrand(brand);
-  };
+  const handleSearch = (e) => {
+    e.preventDefault();
 
-  const handleSearch = async () => {
     if (selectedBrand) {
       dispatch(setSelectedBrands(selectedBrand));
     }
+    if (selectedPrice) {
+      dispatch(setSelectedPrices(selectedPrice.toString()));
+    }
+    if (localMileage.from || localMileage.to) {
+      dispatch(setMileage(localMileage));
+    }
   };
 
-  const handleMileageChange = (e) => {
-    const { name, value } = e.target;
-    setMileage((prevMileage) => ({
-      ...prevMileage,
-      [name]: value,
-    }));
+  const handleMileageChange = (name, value) => {
+    setLocalMileage((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleBrandChange = (brand) => {
+    setSelectedBrand(brand);
   };
 
   const handlePriceChange = (price) => {
@@ -76,20 +83,16 @@ function FilterForm() {
 
   return (
     <div className={css.container}>
-      <form className={css.form}>
+      <form className={css.form} onSubmit={handleSearch}>
         {error && (
           <div className={css.errorMessage}>
             <p>{error}</p>
           </div>
         )}
         <SelectBrand brands={brands} onChange={handleBrandChange} />
-        <SelectPrice
-          prices={prices}
-          selectedPrice={selectedPrice}
-          onChange={handlePriceChange}
-        />
-        <SelectMileage mileage={mileage} onChange={handleMileageChange} />
-        <SearchButton onClick={handleSearch} />
+        <SelectPrice prices={prices} onChange={handlePriceChange} />
+        <SelectMileage mileage={localMileage} onChange={handleMileageChange} />
+        <SearchButton />
       </form>
     </div>
   );

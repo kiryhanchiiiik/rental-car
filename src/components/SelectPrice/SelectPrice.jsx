@@ -1,22 +1,28 @@
 import { useState, useEffect, useRef } from "react";
 import css from "./SelectPrice.module.css";
 
-function SelectPrice({ prices, selectedPrice, onChange }) {
+function SelectPrice({ prices, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedPrice, setSelectedPriceState] = useState(null);
   const dropdownRef = useRef(null);
 
   const handleToggle = () => setIsOpen((prev) => !prev);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!dropdownRef.current?.contains(event.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handlePriceClick = (price) => {
+    setSelectedPriceState(price);
+    onChange(price.toString());
+    setIsOpen(false);
+  };
 
   return (
     <div className={css.wrapper}>
@@ -34,16 +40,13 @@ function SelectPrice({ prices, selectedPrice, onChange }) {
             </svg>
           </div>
         </button>
-        {isOpen && prices?.length > 0 && (
+        {isOpen && (
           <ul className={css.dropdownList}>
             {prices.map((price) => (
               <li
                 key={price}
                 className={css.dropdownItem}
-                onClick={() => {
-                  onChange(price);
-                  setIsOpen(false);
-                }}
+                onClick={() => handlePriceClick(price)}
               >
                 {price}
               </li>

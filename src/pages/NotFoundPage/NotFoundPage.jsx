@@ -3,10 +3,10 @@ import css from "./NotFoundPage.module.css";
 function NotFoundPage() {
   return (
     <div className={css.notFoundContainer}>
-      <div className={css.notFoundTitle}>404</div>
-      <div className={css.notFoundMessage}>
-        Oops! The page youre looking for doesnt exist.
-      </div>
+      <p className={css.notFoundTitle}>404</p>
+      <p className={css.notFoundMessage}>
+        Oops! The page you're looking for doesn't exist.
+      </p>
       <button
         className={css.notFoundButton}
         onClick={() => (window.location.href = "/")}

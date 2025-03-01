@@ -1,49 +1,56 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectBrand } from "../../redux/filterCars/filterSelectors";
-import { axiosInstance } from "./../../api/axiosInstance";
+import {
+  selectBrand,
+  selectPrice,
+  selectMileage,
+} from "../../redux/filterCars/filterSelectors";
+import { axiosInstance } from "../../api/axiosInstance";
 import CarItem from "../CarItem/CarItem";
 import Loader from "../Loader/Loader";
 import css from "./CarCard.module.css";
 
 function CarCard() {
   const selectedBrand = useSelector(selectBrand);
+  const selectedPrice = useSelector(selectPrice);
+  const selectedMileage = useSelector(selectMileage);
   const [cars, setCars] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchCars = async (page) => {
+  const fetchCars = async (page, reset = false) => {
     setLoading(true);
     setError(null);
     try {
       const params = {
         page,
         limit: 12,
+        brand: selectedBrand,
+        rentalPrice: selectedPrice,
+        minMileage: selectedMileage?.from || "",
+        maxMileage: selectedMileage?.to || "",
       };
-
-      if (selectedBrand) {
-        params.brand = selectedBrand;
-      }
 
       const { data } = await axiosInstance.get("cars", { params });
 
       setCars((prevCars) =>
-        page === 1 ? data.cars : [...prevCars, ...data.cars]
+        reset ? data.cars : [...(prevCars || []), ...data.cars]
       );
       setTotalPages(data.totalPages);
     } catch (error) {
       setError("Failed to load vehicles. Please try again later.");
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCars(currentPage);
-  }, [currentPage, selectedBrand]);
+    setCurrentPage(1);
+    fetchCars(1, true);
+  }, [selectedBrand, selectedPrice, selectedMileage]);
 
   const toggleLike = (carId) => {
     setCars((prevCars) =>
@@ -55,7 +62,9 @@ function CarCard() {
 
   const loadMoreCars = () => {
     if (currentPage < totalPages && !loading) {
-      setCurrentPage((prevPage) => prevPage + 1);
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      fetchCars(nextPage);
     }
   };
 
@@ -69,10 +78,10 @@ function CarCard() {
         <div className={css.errorContainer}>
           <p className={css.errorMessage}>{error}</p>
         </div>
-      ) : (
+      ) : cars && cars.length > 0 ? (
         <>
           <ul className={css.list}>
-            {cars?.map((car) => (
+            {cars.map((car) => (
               <CarItem key={car.id} car={car} toggleLike={toggleLike} />
             ))}
           </ul>
@@ -85,15 +94,20 @@ function CarCard() {
                   type="button"
                   className={css.loadMore}
                   onClick={loadMoreCars}
-                  disabled={currentPage >= totalPages}
                 >
-                  {loading ? "Загрузка..." : "Load more"}
+                  Load more
                 </button>
               )}
             </div>
           )}
         </>
-      )}
+      ) : !loading && cars?.length === 0 ? (
+        <div className={css.notFound}>
+          <div className={css.notFoundContainer}>
+            <p>No cars found for the selected filter.</p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
