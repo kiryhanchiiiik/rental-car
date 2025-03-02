@@ -1,7 +1,8 @@
 import { InfinitySpin } from "react-loader-spinner";
+import css from "./Loader.module.css";
 function Loader() {
   return (
-    <div>
+    <div className={css.loaderContainer}>
       <InfinitySpin
         visible={true}
         width="200"
@@ -13,6 +14,7 @@ function Loader() {
           justifyContent: "center",
           marginTop: "20px",
         }}
+        className={css.loader}
       />
     </div>
   );
