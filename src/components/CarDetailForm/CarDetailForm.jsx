@@ -46,6 +46,7 @@ const CarDetailsPage = () => {
         onSubmit={(values, { resetForm }) => {
           handleSuccess();
           resetForm();
+          setBookingDate(null);
         }}
       >
         {({ touched, errors, setFieldValue }) => (

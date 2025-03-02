@@ -39,13 +39,14 @@
 }
 
 .selectButton {
+  font-weight: 500;
   width: 170px;
   padding: 12px 16px;
   border-radius: 12px;
-  background: #f7f7f7;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #f7f7f7;
   cursor: pointer;
   color: #101828;
 }
