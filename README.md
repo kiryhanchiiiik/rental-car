@@ -19,9 +19,15 @@ To get started with the Rental Car project, follow these steps:
    ```bash
    git clone https://github.com/your-username/rental-car.git
    ```
-2. cd rental-car
-3. npm install
-4. npm run dev
+2. ```bash
+   cd rental-car
+   ```
+3. ```bash
+   npm install
+   ```
+4. ```bash
+   npm run dev
+   ```
 
 ## 🛠 Technologies Used
 
@@ -37,4 +43,8 @@ To get started with the Rental Car project, follow these steps:
 
 ## 👨‍💻 Author
 
-- Kyryl Shchabelskyi – 17-year-old developer
+- Kyryl Shchabelskyi – 17 year old developer.
+
+```
+
+```
