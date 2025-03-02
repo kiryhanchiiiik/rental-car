@@ -19,13 +19,16 @@ To get started with the Rental Car project, follow these steps:
    ```bash
    git clone https://github.com/your-username/rental-car.git
    ```
-2. ```bash
+2. Navigate to the project directory:
+   ```bash
    cd rental-car
    ```
-3. ```bash
+3. Install the dependencies:
+   ```bash
    npm install
    ```
-4. ```bash
+4. Start the application:
+   ```bash
    npm run dev
    ```
 
