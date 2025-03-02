@@ -47,7 +47,3 @@ To get started with the Rental Car project, follow these steps:
 ## 👨‍💻 Author
 
 - Kyryl Shchabelskyi – 17 year old developer.
-
-```
-
-```
