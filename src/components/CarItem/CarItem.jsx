@@ -48,9 +48,9 @@ function CarItem({ car }) {
       <p className={css.infoTwo}>
         {car.type} | {car.mileage.toLocaleString().replace(/,/g, " ")} km
       </p>
-      <Link to={`/catalog/${car.id}`} type="button" className={css.btn}>
-        Read more
-      </Link>
+      <button className={css.btn} type="button">
+        <Link to={`/catalog/${car.id}`}>Read more</Link>
+      </button>
     </li>
   );
 }

@@ -44,6 +44,10 @@
   color: #ffffff;
   border-radius: 12px;
 }
+.btn:hover,
+.btn:focus {
+  background-color: #0b44cd;
+}
 
 .svg {
   cursor: pointer;
