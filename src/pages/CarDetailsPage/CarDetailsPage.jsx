@@ -1,35 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../api/axiosInstance";
-
+import { useDispatch, useSelector } from "react-redux";
+import { resetFilters } from "../../redux/filterCars/filterSlice";
 import css from "./CarDetailsPage.module.css";
 import CarDetailForm from "../../components/CarDetailForm/CarDetailForm";
 import Loader from "../../components/Loader/Loader";
 
+import {
+  setCarList,
+  setError,
+  setLoading,
+} from "../../redux/likedCar/carSlice";
+import { selectError, selectLoading } from "../../redux/likedCar/carSelectors";
+
 function CarDetailsPage() {
   const { id } = useParams();
-  const [car, setCar] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const car = useSelector((state) =>
+    state.cars.carList.find((car) => car.id === id)
+  );
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   const fetchCarDetail = async () => {
+    dispatch(setLoading(true));
     try {
-      setIsLoading(true);
       const res = await axiosInstance.get(`cars/${id}`);
-      setCar(res.data);
+      dispatch(setCarList({ cars: [res.data] }));
+      dispatch(setError(null));
     } catch (err) {
       console.error("Failed to load car details:", err);
-      setError("Failed to load car details. Please try again later.");
+      dispatch(setError("Failed to load car details. Please try again later."));
     } finally {
-      setIsLoading(false);
+      dispatch(setLoading(false));
     }
   };
 
   useEffect(() => {
     fetchCarDetail();
-  }, [id]);
+    return () => {
+      dispatch(resetFilters());
+    };
+  }, [id, dispatch]);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className={css.loader}>
         <Loader />

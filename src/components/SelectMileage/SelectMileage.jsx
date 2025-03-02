@@ -10,7 +10,7 @@ function SelectMileage({ mileage, onChange }) {
   };
 
   const formatMileage = (value) => {
-    if (!value) return value;
+    if (!value) return "";
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
